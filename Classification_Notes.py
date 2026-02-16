@@ -170,6 +170,6 @@ scaler = StandardScaler()  # what this does is it standardizes the features by r
 
 #This is important for SVMs because they are sensitive to the scale of the features.
 scaler.fit(X) 
-scaled_X = scaler.transform(X)
+scaled_X = scaler.transform(X) # Does not return a pandas series, but a numpy array, we have rows as samples and columns as features.
 
 

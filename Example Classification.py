@@ -25,9 +25,7 @@ scaler = StandardScaler()  # what this does is it standardizes the features by r
 scaler.fit(X)  # This line of code is fitting the StandardScaler to the data in X,
 # It calculaes the mean and standard deviation of each feature in X, which will be used for scaling the data.
 X_scaled = scaler.transform(X) # Now we have the scaled data in X_scaled, which is the result of applying the transformation to X.
-# Returns of the same panda series but with the values scaled.
-
-
+# Does not return a pandas series, but a numpy array, we have rows as samples and columns as features. 
 
 # Obtain the training, test and validation sets
 
@@ -79,6 +77,7 @@ false_positives = (t_pred_test != t_test).sum()
 
 accuracy = 1 - false_positives / len(X_test)
 print(f'Accuracy of the SVM: {accuracy*100:.3f}%')
+
 
 
 
