@@ -172,5 +172,4 @@ scaler = StandardScaler()  # what this does is it standardizes the features by r
 scaler.fit(X) 
 scaled_X = scaler.transform(X)
 
-print (scaled_X)
 

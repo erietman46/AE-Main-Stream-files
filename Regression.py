@@ -177,6 +177,8 @@ for degree in degrees:
     #validation 
     poly_features_cv = poly.transform(X_cv_multi) # We transform the cross-validation data into polynomial features of the current degree to evaluate the model
     y_cv_pred = poly_reg_model.predict(poly_features_cv) # We make predictions on the cross-validation set using the fitted model for the current degree
+    #Returns the predicted values of 'SSPL' for each corresponding set of features in the cross-validation set, based on the polynomial regression model fitted with the 
+    # current degree of polynomial features.
 
     mse = mean_squared_error(y_cv_multi, y_cv_pred) # We calculate the mean squared error for the predictions on the cross-validation set to evaluate the model's performance for the current degree
 

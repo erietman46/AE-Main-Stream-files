@@ -10,10 +10,13 @@ from sklearn.preprocessing import StandardScaler
 
 # Exploring the Dataset
 
-dataset = pd.read_csv('customer_satisfaction.csv').dropna() # Load the dataset from a CSV file using pandas, dropna is used to drop any rows with missing values
+customer_dataset = pd.read_csv('customer_satisfaction.csv').dropna() # Load the dataset from a CSV file using pandas, dropna is used to drop any rows with missing values
 
-X=dataset.drop('satisfaction', axis=1) # This line of code is selecting all the columns of the dataset except for the 'satisfaction' column, which is our target variable.
-t=dataset['satisfaction'] # This line of code is selecting the 'satisfaction' column of the dataset, which contains the target variable 't'.
+
+
+
+X=customer_dataset.drop('satisfaction', axis=1) # This line of code is selecting all the columns of the dataset except for the 'satisfaction' column, which is our target variable.
+t=customer_dataset['satisfaction'] # This line of code is selecting the 'satisfaction' column of the dataset, which contains the target variable 't'.
 
 
 
@@ -45,19 +48,39 @@ def train_test_validation_split(X, y, test_size, cv_size): # Function to split t
     # return split data
     return [X_train, y_train, X_test, y_test, X_cv, y_cv]
 
-X_train, t_train, X_test, t_test, X_cv, t_cv = train_test_validation_split(X_scaled, t, 0.2, 0.1).to_numpy() 
-
+X_train, t_train, X_test, t_test, X_cv, t_cv = train_test_validation_split(X_scaled, t, 0.2, 0.1)
 # Classification with SVMs
+
+
+
 
 kernel_list = ['linear', 'poly', 'rbf', 'sigmoid'] # List of kernels to evaluate
 
 false_positives_list = []
+false_positives = 0 
 
 for kernel in kernel_list:
-    clf = svm.SVC(kernel = kernel, gamma=1)
-    clf.fit(X_train, t_train) # Train the classifier on the training data, returns a 
-    t_predict_cv = clf.predict(X_cv) # Make predictions on the test data
-    
+    clf = svm.SVC(kernel=kernel)
+    clf.fit(X_train, t_train)
+
+    t_pred_cv = clf.predict(X_cv)
+    for i in range(len(t_cv)):
+        if t_pred_cv[i] != t_cv.iloc[i]: # If the predicted value does not match the actual value, it is a false positive
+            false_positives += 1
+    false_positives_list.append(false_positives)
+
+kernel = 'rbf' # We choose the kernel with the least false positives on the cross-validation set, which is the RBF kernel in this case.
+
+clf = svm.SVC(kernel=kernel)
+clf.fit(X_train, t_train)
+
+t_pred_test = clf.predict(X_test)
+false_positives = (t_pred_test != t_test).sum()
+
+accuracy = 1 - false_positives / len(X_test)
+print(f'Accuracy of the SVM: {accuracy*100:.3f}%')
+
+
 
 
 
