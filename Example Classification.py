@@ -12,12 +12,8 @@ from sklearn.preprocessing import StandardScaler
 
 customer_dataset = pd.read_csv('customer_satisfaction.csv').dropna() # Load the dataset from a CSV file using pandas, dropna is used to drop any rows with missing values
 
-
-
-
 X=customer_dataset.drop('satisfaction', axis=1) # This line of code is selecting all the columns of the dataset except for the 'satisfaction' column, which is our target variable.
 t=customer_dataset['satisfaction'] # This line of code is selecting the 'satisfaction' column of the dataset, which contains the target variable 't'.
-
 
 
 scaler = StandardScaler()  # what this does is it standardizes the features by removing the mean and scaling to unit variance.
@@ -47,10 +43,7 @@ def train_test_validation_split(X, y, test_size, cv_size): # Function to split t
     return [X_train, y_train, X_test, y_test, X_cv, y_cv]
 
 X_train, t_train, X_test, t_test, X_cv, t_cv = train_test_validation_split(X_scaled, t, 0.2, 0.1)
-# Classification with SVMs
-
-
-
+# Classification with SVMs, choose the best kernel based on the number of false positives
 
 kernel_list = ['linear', 'poly', 'rbf', 'sigmoid'] # List of kernels to evaluate
 
@@ -66,8 +59,11 @@ for kernel in kernel_list:
         if t_pred_cv[i] != t_cv.iloc[i]: # If the predicted value does not match the actual value, it is a false positive
             false_positives += 1
     false_positives_list.append(false_positives)
+    false_positives = 0 # Reset false_positives for the next kernel
 
-kernel = 'rbf' # We choose the kernel with the least false positives on the cross-validation set, which is the RBF kernel in this case.
+
+
+kernel = kernel_list[2] # We choose the kernel with the least false positives on the cross-validation set, which is the RBF kernel in this case.
 
 clf = svm.SVC(kernel=kernel)
 clf.fit(X_train, t_train)
@@ -77,6 +73,7 @@ false_positives = (t_pred_test != t_test).sum()
 
 accuracy = 1 - false_positives / len(X_test)
 print(f'Accuracy of the SVM: {accuracy*100:.3f}%')
+
 
 
 
