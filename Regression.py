@@ -88,7 +88,8 @@ print(f'Mean Squared Error: {mse}')
 
 # 4. Make prediction using the model
 X_pred = 10 # Example value of 'alpha' for which we want to predict 'SSPL'
-y_pred_single = model.predict(np.array([[X_pred]]))   
+y_pred_single = model.predict(np.array([[X_pred]]))    #Returns a 
+#  NumPy array containing the predicted value of 'SSPL' for the given value of 'alpha' (10 in this case) using the fitted linear regression model.
 print(f'Predicted value for X = {X_pred}: {y_pred_single[0]}')
 
 
