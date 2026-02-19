@@ -27,10 +27,10 @@ if __name__ == '__main__':
         - Edit the following code to calculate the mean value and standard deviation of
         distance and duration
     """
-    X_mean = 0.0
-    y_mean = 0.0
-    X_std = 0.0
-    y_std = 0.0
+    X_mean = np.mean(X)
+    y_mean = np.mean(y)
+    X_std = np.std(X)
+    y_std = np.std(y)
 
     # report on the mean value and standard deviation
     print(f'Mean flight time: {y_mean:.2f} [min], mean distance: {X_mean:.2f} [km]')
@@ -42,6 +42,8 @@ if __name__ == '__main__':
     Part 1, Step 2(a):
         - Apply function {scale} (implemented in file preprocess.py) to standardize the dataset
     """
+    X_norm = scale(X, X_mean, X_std)
+    y_norm = scale(y, y_mean, y_std)
 
     # 2.b verify that the scaled dataset has now zero mean and one standard deviation
     """
@@ -50,9 +52,10 @@ if __name__ == '__main__':
         - Edit the following code to verify that the mean and standard deviation of the standardized
         dataset are indeed equal to zero and one, respectively
     """
-    X_norm_mean = 0.0
-    y_norm_mean = 0.0
-    X_norm_std = 0.0
-    y_norm_std = 0.0
+    X_norm_mean = np.mean(X_norm)
+    y_norm_mean = np.mean(y_norm)
+    X_norm_std = np.std(X_norm)
+    y_norm_std = np.std(y_norm)
     print(f'Mean flight time: {y_norm_mean:.2f} [min], mean distance: {X_norm_mean:.2f} [km]')
     print(f'Std flight time: {y_norm_std:.2f} [min], std distance: {X_norm_std:.2f} [km]')
+

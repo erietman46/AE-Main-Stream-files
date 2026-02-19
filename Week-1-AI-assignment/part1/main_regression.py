@@ -4,7 +4,7 @@
 from load_data import load_dataset
 from preprocess import dataset_split, standardize
 from regression import train, predict
-
+import numpy as np
 
 if __name__ == '__main__':
 
@@ -18,6 +18,7 @@ if __name__ == '__main__':
         - Apply function dataset split (implemented in file preprocess.py) to split the dataset
         into the training and and test subsets (70%-30% split)
     """
+    X_train, y_train, X_test, y_test = dataset_split(X, y, 0.7)
 
     # 2. Standardize the dataset
     X_train, y_train, X_test, y_test, X_mean, y_mean, X_std, y_std = standardize(X_train, y_train, X_test, y_test)
@@ -39,3 +40,5 @@ if __name__ == '__main__':
     print(f'Flight time from Amsterdam to Milano: {time_milano:.2f} [min]')
     print(f'Flight time from Amsterdam to Seattle: {time_seattle:.2f} [min]')
     print(f'Flight time from Amsterdam to Brussels: {time_brussels:.2f} [min]')
+
+print(X_train)

@@ -22,7 +22,6 @@ def inverse_scale(X, a, b):
     # return the scaled data
     return b * X + a
 
-
 def standardize(X_train, y_train, X_test, y_test):
     """
     TODO:
@@ -31,13 +30,24 @@ def standardize(X_train, y_train, X_test, y_test):
     """
 
     # get the mean and standard deviation on the training set
-    X_mean = 0.0
-    X_std = 0.0
-    y_mean = 0.0
-    y_std = 0.0
+    X_mean = float(np.mean(X_train))
+    X_std = float(np.std(X_train))
+
+    y_mean = float(np.mean(y_train))
+    y_std = float(np.std(y_train))
+
+    # avoid division by zero
+    if X_std == 0:
+        X_std = 1.0
+    if y_std == 0:
+        y_std = 1.0
 
     # standardize all data
-    # ...
+    X_train = scale(X_train, X_mean, X_std)
+    X_test = scale(X_test, X_mean, X_std)
+
+    y_train = scale(y_train, y_mean, y_std)
+    y_test = scale(y_test, y_mean, y_std)
 
     # return the standardized data and the mean and standard deviation of the training data
     return X_train, y_train, X_test, y_test, X_mean, y_mean, X_std, y_std
