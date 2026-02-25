@@ -23,6 +23,11 @@ scaler.fit(X)  # This line of code is fitting the StandardScaler to the data in 
 X_scaled = scaler.transform(X) # Now we have the scaled data in X_scaled, which is the result of applying the transformation to X.
 # Does not return a pandas series, but a numpy array, we have rows as samples and columns as features. 
 
+FFT = np.fft.fft(np.exp(2j * np.pi * np.arange(8) / 8))
+
+print(FFT)
+print(FFT[1:4])
+
 # Obtain the training, test and validation sets
 
 def train_test_validation_split(X, y, test_size, cv_size): # Function to split the data into training, testing, and cross-validation sets, done with random shuffling 
@@ -60,6 +65,7 @@ for kernel in kernel_list:
             false_positives += 1
     false_positives_list.append(false_positives)
     false_positives = 0 # Reset false_positives for the next kernel
+
 
 
 
